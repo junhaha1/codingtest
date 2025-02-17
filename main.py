@@ -18,3 +18,4 @@ for i in range(t):
     min_beer = ceil((fx + fy) / 50)
     visit_number = ceil(min_beer / 20) -1 #편의점 방문 해야하는 최소 횟수
     print(min_beer, visit_number)
+    print("test")
