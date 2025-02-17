@@ -1,3 +1,5 @@
+#9205번 맥주 마시면서 걸어가기
+
 from collections import deque
 from math import ceil
 t = int(input())
