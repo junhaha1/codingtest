@@ -3,16 +3,19 @@ from sys import stdin
 input = stdin.readline
 t = int(input())
 
+result = []
 for i in range(t):
     total = 0
-    stock = []
     day = int(input())
     prices = list(map(int, input().split()))
-    for j in range(len(prices)):
-        if prices[j] == min(prices[j:len(prices)]) or prices[j] < max(prices[j:len(prices)]):
-            stock.append(prices[j])
-        elif prices[j] == max(prices[j:len(prices)]):
-            total += (prices[j] * len(stock)) - sum(stock)
-            stock.clear()
-    print(total)
-            
+
+    #prices.reverse()로 해도 가능
+    m = 0
+    for j in prices[::-1]:
+        if j >= m:
+            m = j
+        elif j < m:
+            total += m - j
+    result.append(total)
+for t in result:
+    print(t)
