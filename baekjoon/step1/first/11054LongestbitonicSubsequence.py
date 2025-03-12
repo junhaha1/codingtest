@@ -9,7 +9,7 @@ r_a = a[::-1]
 dp1 = [1] * n #증가하는
 dp2 = [1] * n #감소하는
 
-def bs1(a, lis):
+def bs(a, lis):
   s = 0
   e = len(lis) - 1
   while s <= e:
@@ -28,14 +28,14 @@ for i in range(1, n):
     i_lis.append(a[i])
     dp1[i] = len(i_lis)
   else:
-    idx = bs1(a[i], i_lis)
+    idx = bs(a[i], i_lis)
     i_lis[idx] = a[i]
     dp1[i] = len(i_lis[:idx + 1])
   if d_lis[-1] < r_a[i]:
     d_lis.append(r_a[i])
     dp2[i] = len(d_lis)
   else:
-    idx = bs1(r_a[i], d_lis)
+    idx = bs(r_a[i], d_lis)
     d_lis[idx] = r_a[i]
     dp2[i] = len(d_lis[:idx + 1])
 
