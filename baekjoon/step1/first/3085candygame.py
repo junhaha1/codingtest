@@ -25,15 +25,17 @@ def solve(lis):
   cnt = -1
   for i in range(n):
     for j in range(1, n):
-      #오른쪽과 바꾸기
-      lis[i][j], lis[i][j-1] = lis[i][j-1], lis[i][j]
-      cnt = max(cnt, count(lis))
-      lis[i][j-1], lis[i][j] = lis[i][j], lis[i][j-1]
+      if lis[i][j] != lis[i][j-1]:
+        #오른쪽과 바꾸기
+        lis[i][j], lis[i][j-1] = lis[i][j-1], lis[i][j]
+        cnt = max(cnt, count(lis))
+        lis[i][j-1], lis[i][j] = lis[i][j], lis[i][j-1]
       
-      #아래와 바꾸기
-      lis[j][i], lis[j-1][i] = lis[j-1][i], lis[j][i]
-      cnt = max(cnt, count(lis))
-      lis[j-1][i], lis[j][i] = lis[j][i], lis[j-1][i]
+      if lis[j][i] != lis[j-1][i]:
+        #아래와 바꾸기
+        lis[j][i], lis[j-1][i] = lis[j-1][i], lis[j][i]
+        cnt = max(cnt, count(lis))
+        lis[j-1][i], lis[j][i] = lis[j][i], lis[j-1][i]
   return cnt
 
 n = int(input())
