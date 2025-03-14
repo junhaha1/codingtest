@@ -32,7 +32,25 @@ for i in range(n): #행
       if i - 1 >= 0:
         temp = max(board[i-1][j+2], board[i-1][j]) + board[i][j] + board[i][j+1] + board[i][j+2]
         ans = max(temp, ans)
-    #4번 도형
-    #5번 도형
-
+    
+    #4&5번 도형 세로
+    if j + 1 < m:
+      if i - 1 >= 0 and i + 1 < n: #||
+        #4번 도형
+        temp = max(board[i-1][j] + board[i+1][j+1], board[i-1][j+1] + board[i+1][j]) + board[i][j] + board[i][j+1]
+        ans = max(temp, ans)
+        
+        #5번 도형
+        temp = max(board[i-1][j] + board[i+1][j], board[i-1][j+1] + board[i+1][j+1]) + board[i][j] + board[i][j+1]
+        ans = max(temp, ans)
+    # 4&5번 도형 가로
+    if i + 1 < n:
+      if j-1 >=0 and j + 1 < m:
+        #4번 도형
+        temp = max(board[i][j-1] + board[i+1][j+1], board[i][j+1] + board[i+1][j-1]) + board[i][j] + board[i+1][j]
+        ans = max(temp, ans)
+        
+        temp = max(board[i][j-1] + board[i][j+1], board[i+1][j-1] + board[i+1][j+1]) + board[i][j] + board[i+1][j]
+        ans = max(temp, ans)
+        
 print(ans)
