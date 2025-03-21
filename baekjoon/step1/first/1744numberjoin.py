@@ -40,10 +40,4 @@ def calc2(num, zero):
   return temp
 
 n1, n2 = calc1(num1), calc2(num2, zero)
-
-
 print(n1 + n2)
-      
-      
-    
-  
