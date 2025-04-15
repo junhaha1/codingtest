@@ -10,7 +10,6 @@ temp = [t[0]]
 
 for i in range(1, n):
   temp.append(temp[-1] + t[i])
-  
 result = temp[k-1]
   
 for i in range(k, n):
