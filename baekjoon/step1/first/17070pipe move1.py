@@ -34,5 +34,3 @@ while d:
 #print(*dp, sep='\n')
 
 print(dp[n-1][n-1])
-  
-  
