@@ -17,7 +17,9 @@ for i in range(1, n + 1):
     v = obj[i][1] #비용 
     
     if j < w: #넣을 수 없으므로 이전 거 가져오기
-      obj[i][j] = obj[i-1][j]
+      bags[i][j] = bags[i-1][j]
     else:
-      pass
+      bags[i][j] = max(bags[i-1][j-w] + v, bags[i-1][j])
+      
+print(bags[n][k])
       
