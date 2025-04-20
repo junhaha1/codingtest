@@ -29,11 +29,13 @@ for k in range(1, n + 1):
       if graph[a][b] > graph[a][k] + graph[k][b]:
         graph[a][b] = graph[a][k] + graph[k][b]
         path[a][b] = k
+
+#이 반복문을 통해 무조건 INF 값을 미리 0으로 만들어두기
 for j in range(1, n + 1):
   for i in range(1, n + 1):
     if graph[i][j] == INF:
       graph[i][j] = 0
-      
+
 for i in range(1, n + 1):
   print(*graph[i][1:])
 
