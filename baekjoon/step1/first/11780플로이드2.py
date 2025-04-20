@@ -29,13 +29,17 @@ for k in range(1, n + 1):
       if graph[a][b] > graph[a][k] + graph[k][b]:
         graph[a][b] = graph[a][k] + graph[k][b]
         path[a][b] = k
+for j in range(1, n + 1):
+  for i in range(1, n + 1):
+    if graph[i][j] == INF:
+      graph[i][j] = 0
       
 for i in range(1, n + 1):
   print(*graph[i][1:])
 
 for i in range(1, n + 1):
   for j in range(1, n + 1):
-    if graph[i][j] == INF or i == j:
+    if graph[i][j] == INF or graph[i][j] == 0:
       print(0)
       continue
     
