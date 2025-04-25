@@ -1,23 +1,24 @@
 N = int(input())
 
-
-board = [[0] * (N) for _ in range(N)]
 queens = [-1] * N
 
-def check(r, c):
-  for row, col in enumerate(queens):
-    if row == r or col == -1:
-      continue
-    if abs(r - row) == abs(c - col) or c == col: #대각선에 위치하거나 같은 열에 있다면
-      return False
-  return True
+def is_possible(r):
+    for row in range(r):
+        if queens[row] == queens[r]:
+            return False
+        if (r - row) == abs(queens[row] - queens[r]):
+            return False
+    return True
 
-def dfs(row, col):
-  if col < 0 or col == N or row == N or -1 not in queens:
-    return
-  
-  dfs()
-  
-for i in range(N):
-  dfs(0, i)
-  
+def dfs(row):
+    if row == N:
+        return 1
+    
+    ans = 0
+    for i in range(N):
+        queens[row] = i
+        if is_possible(row):
+            ans += dfs(row + 1)
+    return ans
+
+print(dfs(0))
