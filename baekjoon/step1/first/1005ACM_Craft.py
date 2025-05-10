@@ -5,33 +5,30 @@ input = stdin.readline
 
 for _ in range(int(input())):
     N, K = map(int, input().split())
-
-    times = [0] + list(map(int, input().split())) #건물 건설 시간
-    graph = [[] for _ in range(N + 1)] #인접 리스트
-    in_degree = [0] * (N + 1)    #진입차수로 판단
-    q = deque() 
-    result =[]
+    cost = [0] + list(map(int, input().split()))
+    dag = [[] for _ in range(N + 1)]
+    in_degree = [0] * (N + 1)
+    dp = [0] * (N + 1)
 
     for _ in range(K):
-        s, e = map(int, input().split())
-        graph[s].append(e)
-        in_degree[e] += 1
-    
-    for i in range(1, N + 1): #진입차수 0인거 큐에 삽입
+        X, Y = map(int, input().split())
+        dag[X].append(Y)
+        in_degree[Y] += 1
+
+    W = int(input())
+
+    q = deque()
+    for i in range(1, N + 1):
         if in_degree[i] == 0:
+            dp[i] = cost[i]
             q.append(i)
 
     while q:
-        now = q.popleft()
-        result.append(now)
-        for i in graph[now]:
-            in_degree[i] -= 1
-            if in_degree[i] == 0:
-                q.append(i)
-                
-    print(result)
+        cur = q.popleft()
+        for next in dag[cur]:
+            in_degree[next] -= 1
+            dp[next] = max(dp[next], dp[cur] + cost[next])
+            if in_degree[next] == 0:
+                q.append(next)
 
-
-    # print(graph)
-    # print(in_degree)
-    # print(q)
+    print(dp[W])
