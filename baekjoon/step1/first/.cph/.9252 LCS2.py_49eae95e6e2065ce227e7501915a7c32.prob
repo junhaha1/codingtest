@@ -1,0 +1,1 @@
+{"name":"Local: 9252 LCS2","url":"c:\\my_app\\codingtest\\baekjoon\\step1\\first\\9252 LCS2.py","tests":[{"id":1746714838515,"input":"ACAYKP\nCAPCAK","output":"4\nACAK"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\my_app\\codingtest\\baekjoon\\step1\\first\\9252 LCS2.py","group":"local","local":true}
