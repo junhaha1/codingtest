@@ -8,8 +8,7 @@ fish_pos = dict()
 max_score = 0
 
 # ↑, ↖, ←, ↙, ↓, ↘, →, ↗
-dir = [(-1, 0), (-1, -1), (0, -1), (1, -1),
-       (1, 0), (1, 1), (0, 1), (-1, 1)]
+dir = [(-1, 0), (-1, -1), (0, -1), (1, -1), (1, 0), (1, 1), (0, 1), (-1, 1)]
 
 def move_fishes(board, fish_pos, shark_pos):
     for fish_num in range(1, 17):
@@ -17,7 +16,7 @@ def move_fishes(board, fish_pos, shark_pos):
             continue
 
         y, x = fish_pos[fish_num]
-        d = board[y][x][1]
+        d = board[y][x][1] #해당 물고기 방향
 
         for i in range(8):
             nd = (d + i) % 8
@@ -35,28 +34,31 @@ def move_fishes(board, fish_pos, shark_pos):
 
 def dfs(board, fish_pos, shark_pos, shark_dir, score):
     global max_score
-    board = deepcopy(board)
-    fish_pos = deepcopy(fish_pos)
-
+    
     move_fishes(board, fish_pos, shark_pos)
+
+    temp_board = deepcopy(board)
+    temp_fish_pos = deepcopy(fish_pos)
 
     y, x = shark_pos
     moved = False  # 상어가 한 번이라도 이동했는지
 
-    for step in range(1, 4):
+    for step in range(1, 4): #해당 방향으로 최대 3번만 이동 가능 4 * 4이므로.
         ny = y + dir[shark_dir][0] * step
         nx = x + dir[shark_dir][1] * step
 
-        if 0 <= ny < 4 and 0 <= nx < 4 and board[ny][nx][0] != 0:
+        if 0 <= ny < 4 and 0 <= nx < 4 and board[ny][nx][0] != 0: #물고기가 없는 곳이 아니라면 
             moved = True
-            eat_fish_num, new_dir = board[ny][nx]
+            eat_fish_num, new_dir = board[ny][nx] #먹은 물고기 번호, 새로운 방향
 
-            board[y][x] = (0, 0)
-            board[ny][nx] = (0, 0)
-            del fish_pos[eat_fish_num]
+            board[ny][nx] = (0, 0) #상어가 이동한 곳의 물고기를 먹었으므로 0으로 초기화 
+            del fish_pos[eat_fish_num] #먹은 물고기 딕셔너리에서 삭제
 
             dfs(board, fish_pos, (ny, nx), new_dir, score + eat_fish_num)
 
+            board = deepcopy(temp_board)
+            fish_pos = deepcopy(temp_fish_pos)
+            
     if not moved:
         max_score = max(max_score, score)
 
@@ -69,10 +71,10 @@ for i in range(4):
         board[i][j] = (fish_num, direction)
         fish_pos[fish_num] = (i, j)
 
-first_fish_num, first_dir = board[0][0]
-board[0][0] = (0, 0)
+first_fish_num, first_fish_dir = board[0][0]
+board[0][0] = (0, 0) #상어가 해당 물고기를 먹음. 
 del fish_pos[first_fish_num]
 
-dfs(board, fish_pos, (0, 0), first_dir, first_fish_num)
+dfs(board, fish_pos, (0, 0), first_fish_dir, first_fish_num)
 
 print(max_score)
