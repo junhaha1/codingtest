@@ -4,4 +4,4 @@ def solution(n, money):
     for m in money:
         for i in range(m, n + 1):
             dp[i] = (dp[i] + dp[i - m]) % MOD
-    return dp[n]
+    return dp[n] 
