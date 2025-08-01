@@ -29,17 +29,21 @@ def group_mineral(visited, board, ny, nx):
     group.append([ny, nx])
 
     dirs = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+
+    ground = False
     while q:
         y, x = q.popleft()
+
+        if y == R - 1: #y좌표가 R - 1이라면 해당 클러스터는 바닥에 붙어있는 클러스터
+            ground = True
+
         for dy, dx in dirs:
             ny, nx = y + dy, x + dx
             if 0 <= ny < R and 0 <= nx < C and board[ny][nx] == 'x' and not visited[ny][nx]:
                 q.append((ny, nx))
                 group.append([ny, nx])
                 visited[ny][nx] = True
-
-    group.sort(reverse=True)
-    return group
+    return ground, group
 
     
 def fall_mineral(pos, R, board):
@@ -80,27 +84,20 @@ for height in heights:
     board[row][col] = '.'
     visited = [[False] * C for _ in range(R)]
 
-    groups = dict()
+    target = dict()
     num = 0
 
     for dy, dx in dirs:
         ny, nx = row + dy, col + dx
         if 0 <= ny < R and 0 <= nx < C and board[ny][nx] == 'x' and not visited[ny][nx]:
-            num += 1
-            groups[num] = group_mineral(visited, board, ny, nx)
-    
-    # print(groups)
-    # print(*board, sep='\n')
-    
-    
-    if num == 1: #미네랄 그룹이 1개라면 건너뛰기
-        continue
+            ground, pos = group_mineral(visited, board, ny, nx)
 
+            if not ground: #해당 클러스터는 공중에 떠있는 클러스터
+                num += 1
+                target[num] = pos
 
-    for pos in groups.values():
-        if pos[0][0] < R - 1: #이미 바닥에 붙어있는 미네랄 덩어리가 아니라면 미네랄 추락
-            fall_mineral(pos, R, board)
-            # print(*board, sep='\n')
+    for pos in target.values(): #공중에 떠있는 클러스터만 하락 로직 수행
+        fall_mineral(pos, R, board)
 
 for i in range(len(board)):
     print(''.join(board[i]))
